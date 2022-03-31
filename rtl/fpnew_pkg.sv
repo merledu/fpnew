@@ -62,20 +62,21 @@ package fpnew_pkg;
     '{8,  7}   // custom binary16alt
     // add new formats here
   };
-  /////////////
+
+/////////////
 // Opcodes //
 /////////////
 
-// typedef enum logic [6:0] {
-//   // Floating Point
-//   OPCODE_LOAD_FP  = 7'h07,
-//   OPCODE_STORE_FP = 7'h27,
-//   OPCODE_MADD_FP  = 7'h43,
-//   OPCODE_MSUB_FP  = 7'h47,
-//   OPCODE_NMSUB_FP = 7'h4b,
-//   OPCODE_NMADD_FP = 7'h4f,
-//   OPCODE_OP_FP    = 7'h53
-// } opcode_e;
+typedef enum logic [6:0] {
+  // Floating Point
+  OPCODE_LOAD_FP  = 7'h07,
+  OPCODE_STORE_FP = 7'h27,
+  OPCODE_MADD_FP  = 7'h43,
+  OPCODE_MSUB_FP  = 7'h47,
+  OPCODE_NMSUB_FP = 7'h4b,
+  OPCODE_NMADD_FP = 7'h4f,
+  OPCODE_OP_FP    = 7'h53
+} opcode_e;
 
 
   typedef logic [0:NUM_FP_FORMATS-1]       fmt_logic_t;    // Logic indexed by FP format (for masks)
