@@ -9,11 +9,11 @@ module fp_decoder #(
   input  logic [31:0]          instr_rdata_i,         // instruction read from memory/cache
                                                       // replicated to ease fan-out)
   // register file
-  output logic                 rf_we_o,               // write enable for regfile 
+  //output logic                 rf_we_o,               // write enable for regfile 
   // LSU
-  output logic                 data_req_o,            // start transaction to data memory
-  output logic                 data_we_o,             // write enable
-  output logic [1:0]           data_type_o,           // size of transaction: byte, half
+  // output logic                 //data_req_o,            // start transaction to data memory
+  // output logic                 //data_we_o,             // write enable
+  // output logic [1:0]           //data_type_o,           // size of transaction: byte, half
                                                       // word or word
   // Floating point extensions IO
   output fpnew_pkg::roundmode_e fp_rounding_mode_o,      // defines the rounding mode 
@@ -41,7 +41,7 @@ import fpnew_pkg::*;
 
 logic        fp_invalid_rm;
 logic        illegal_insn;
-logic        rf_we;
+//logic        //rf_we;
 logic        opcode_alu;
 
 logic [31:0] instr;
@@ -112,9 +112,9 @@ always_comb begin
     //////////////////////////////////////////
 
     OPCODE_STORE_FP: begin
-      data_req_o         = 1'b1;
-      data_we_o          = 1'b1;
-      data_type_o        = 2'b00;
+      //data_req_o         = 1'b1;
+      //data_we_o          = 1'b1;
+      //data_type_o        = 2'b00;
 
       //use_fp_rs2_o       = 1'b1;
 
@@ -132,8 +132,8 @@ always_comb begin
       end
 
     OPCODE_LOAD_FP: begin
-      data_req_o         = 1'b1;
-      data_type_o        = 2'b00;
+      //data_req_o         = 1'b1;
+      //data_type_o        = 2'b00;
       fp_load_o          = 1'b1;
 
       //use_fp_rd_o        = 1'b1; 
@@ -288,7 +288,7 @@ always_comb begin
           end
         end
         7'b1100000: begin // FCVT.W.S, FCVT.WU.S
-          rf_we            = 1'b1;  // write back in int_regfile
+          //rf_we            = 1'b1;  // write back in int_regfile
           //use_fp_rs1_o     = 1'b1;
           if (~|instr[24:21]) begin
             illegal_insn = ((RVF == RV32FNone) & (~fp_invalid_rm)) ? 1'b1 : 1'b0;
@@ -305,7 +305,7 @@ always_comb begin
           end
         end
         7'b1110000: begin // FMV.X.W , FCLASS.S
-          rf_we            = 1'b1;  // write back in int_regfile
+          //rf_we            = 1'b1;  // write back in int_regfile
           unique case ({instr[24:20],instr[14:12]})
             {5'b00000,3'b000}: begin
               //use_fp_rs1_o   = 1'b1;
@@ -324,7 +324,7 @@ always_comb begin
           endcase
         end
         7'b1010001: begin // FEQ.D, FLT.D, FLE.D
-          rf_we            = 1'b1;  // write back in int_regfile
+          //rf_we            = 1'b1;  // write back in int_regfile
           //use_fp_rs1_o     = 1'b1;
           //use_fp_rs2_o     = 1'b1;
           if (~(instr[14]) | (&instr[13:12])) begin
@@ -333,7 +333,7 @@ always_comb begin
           end
         end
         7'b1010000: begin // FEQ.S, FLT.S, FLE.S
-          rf_we            = 1'b1;  // write back in int_regfile
+          //rf_we            = 1'b1;  // write back in int_regfile
           //use_fp_rs1_o     = 1'b1;
           //use_fp_rs2_o     = 1'b1;
           if (~(instr[14]) | (&instr[13:12])) begin
@@ -342,7 +342,7 @@ always_comb begin
           end
         end
         7'b1110001: begin // FCLASS.D
-          rf_we            = 1'b1;  // write back in int_regfile
+          //rf_we            = 1'b1;  // write back in int_regfile
           //use_fp_rs1_o     = 1'b1;
           unique case ({instr[24:20],instr[14:12]}) 
             {5'b00000,3'b001}: begin  
@@ -355,7 +355,7 @@ always_comb begin
           endcase
         end
         7'b1100001: begin // // FCVT.W.D, FCVT.WU.D
-          rf_we            = 1'b1;  // write back in int_regfile
+          //rf_we            = 1'b1;  // write back in int_regfile
           //use_fp_rs1_o     = 1'b1;
           if (~|instr[24:21]) begin
             illegal_insn = ((RVF == RV64FDouble) & (fp_invalid_rm)) ? 1'b0 : 1'b1;
@@ -371,7 +371,7 @@ always_comb begin
           end
         end
         7'b1111001: begin // FCVT.D.W, FCVT.D.WU
-          rf_we            = 1'b1;  // write back in int_regfile
+          //rf_we            = 1'b1;  // write back in int_regfile
           //use_fp_rd_o      = 1'b1;
           if (~|instr[24:21]) begin
             illegal_insn = ((RVF == RV64FDouble) & (fp_invalid_rm)) ? 1'b0 : 1'b1;
@@ -401,9 +401,9 @@ always_comb begin
   // insufficient privileges), or when accessing non-available registers in RV32E,
   // these cases are not handled here
   if (illegal_insn) begin
-    rf_we           = 1'b0;
-    data_req_o      = 1'b0;
-    data_we_o       = 1'b0;
+    //rf_we           = 1'b0;
+    //data_req_o      = 1'b0;
+    //data_we_o       = 1'b0;
     // floating point
     //fp_rf_we_o      = 1'b0;
   end
@@ -653,5 +653,5 @@ always_comb begin
     endcase
   end
 assign illegal_insn_o = illegal_insn ;
-assign rf_we_o = rf_we;
+//assign rf_we_o = //rf_we;
 endmodule 
