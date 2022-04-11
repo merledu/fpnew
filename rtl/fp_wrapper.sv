@@ -7,11 +7,18 @@ module fp_wrapper #(
   input  [DATAWIDTH-1 : 0]      instr_i       ,
   output [DATAWIDTH-1 : 0]      result_o      ,
   output                        illegal_insn  ,
+  // Input Handshake
+  input                         in_valid_i    ,
+  output                        in_ready_o    ,
+  input                         flush_i       ,
+  // Output signals
   output                        status_o      ,
-  output TagType                tag_o         ,
-  output logic                  out_valid_o   ,
-  output logic                  busy_o        ,
-  output logic                  in_ready_o
+  output                        tag_o         ,
+  // Output handshake
+  output                        out_valid_o   ,
+  input                         out_ready_i   ,
+  // Indication of valid data in flight
+  output                        busy_o
 );
   localparam int unsigned NUM_FP_FORMATS = 5; 
   localparam int unsigned FP_FORMAT_BITS = $clog2(NUM_FP_FORMATS);
@@ -38,9 +45,6 @@ module fp_wrapper #(
   logic [INT_FORMAT_BITS-1:0]        int_fmt_i        ;
   logic                              vectorial_op_i   ;
   logic                              tag_i            ;
-  logic                              in_valid_i       ;
-  logic                              flush_i          ;
-  logic                              out_ready_i      ;
 
 fp_decoder fpdecoder(           //all complete
   .clk_i(clk_i)                         ,

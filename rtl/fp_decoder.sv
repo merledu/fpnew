@@ -9,7 +9,7 @@ module fp_decoder #(
   input  logic [31:0]          instr_rdata_i,         // instruction read from memory/cache
                                                       // replicated to ease fan-out)
   // register file
-  //output logic                 rf_we_o,               // write enable for regfile 
+  // output logic                 rf_we_o,               // write enable for regfile 
   // LSU
   // output logic                 //data_req_o,            // start transaction to data memory
   // output logic                 //data_we_o,             // write enable

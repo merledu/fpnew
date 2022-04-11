@@ -26,4 +26,9 @@ always_comb begin
   assign foperand_a_o = registers[freg1_i];
   assign foperand_b_o = registers[freg2_i];
   assign foperand_c_o = registers[freg3_i];
+
+initial begin
+  registers[freg1_i] = 32'd4;
+  registers[freg2_i] = 32'd3;
+end
 endmodule
