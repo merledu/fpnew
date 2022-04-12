@@ -24,16 +24,12 @@ initial
 $readmemh("/home/wishah/Desktop/FPU/ReV-F-Extension/program.hex",mem);
 
 always @ (posedge clk_i) begin
-  for (int i=0 ; i<32 ; i++) begin
+  for (int i=0 ; i<2 ; i++) begin
   instr_i = mem[i];
   end 
 end
 
 always @ (clk_i) begin
-  if(clk_i)
-    in_valid_i = 1'b1;
-  else
-    in_valid_i = 1'b0;
+  in_valid_i = 1'b1;
 end
-
 endmodule

@@ -72,7 +72,7 @@ fp_register fpregister(         //all complete
   .freg2_i(freg2)             ,
   .freg3_i(freg3)             ,
   .frd_i(frd)                 ,
-  .writeback_data_i(result_o) ,
+  .writeback_data_i() ,
   .foperand_a_o(foperand_a)   ,  
   .foperand_b_o(foperand_b)   ,  
   .foperand_c_o(foperand_c)   

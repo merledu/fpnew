@@ -4,7 +4,7 @@ module fp_register(
 	input logic [31:0] writeback_data_i,
 	output logic [31:0] foperand_a_o , foperand_b_o, foperand_c_o
 );
-	logic   [31:0][31:0]  registers; 
+	logic   [31:0]  registers [31:0]; 
 	logic   [31:0]        we;
 
 always_comb begin 
@@ -26,9 +26,9 @@ always_comb begin
   assign foperand_a_o = registers[freg1_i];
   assign foperand_b_o = registers[freg2_i];
   assign foperand_c_o = registers[freg3_i];
+  assign registers[freg1_i] = 32'd4;
+  assign registers[freg2_i] = 32'd3;
+  assign registers[freg3_i] = 32'd1;
 
-initial begin
-  registers[freg1_i] = 32'd4;
-  registers[freg2_i] = 32'd3;
-end
+
 endmodule
